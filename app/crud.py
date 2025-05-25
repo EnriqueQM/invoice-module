@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app import models, schemas
+from app.pdf_generator import generate_invoice_pdf
 
 def create_customer(db: Session, customer: schemas.CustomerCreate):
     db_customer = models.Customer(**customer.dict())
@@ -23,4 +24,8 @@ def create_invoice(db: Session, invoice: schemas.InvoiceCreate):
     db.add(db_invoice)
     db.commit()
     db.refresh(db_invoice)
+
+    # Generar PDF
+    generate_invoice_pdf(db_invoice)
+
     return db_invoice
