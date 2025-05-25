@@ -1,6 +1,8 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List
 from datetime import datetime
+
+# ---------- Product ----------
 
 class ProductBase(BaseModel):
     name: str
@@ -13,8 +15,9 @@ class Product(ProductBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
+# ---------- Customer ----------
 
 class CustomerBase(BaseModel):
     name: str
@@ -27,8 +30,9 @@ class Customer(CustomerBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
+# ---------- Invoice ----------
 
 class InvoiceBase(BaseModel):
     customer_id: int
@@ -44,4 +48,4 @@ class Invoice(InvoiceBase):
     products: List[Product]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
